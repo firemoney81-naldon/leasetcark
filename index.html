@@ -1,23 +1,977 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <!--
-      Need a visual blank slate?
-      Remove all code in `styles.css`!
-    -->
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js"></script>
-  </head>
-  <body>
-    <nav>
-      <a href="/" aria-current="page">Home</a>
-      <a href="/page2.html">Other page</a>
-    </nav>
-    <main>
-      <h1>Home page</h1>
-    </main>
-  </body>
-</html>
+
+ <style>
+    /* --- CSS Reset & Base --- */
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      color: #333;
+      background: #f4f7f6; /* Soft, modern background */
+      scroll-behavior: smooth;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 0;
+      line-height: 1.3;
+    }
+    a {
+      color: #007bff; /* Standard blue link color */
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    a:hover {
+      color: #0056b3;
+      text-decoration: underline;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* --- Header & Navigation --- */
+    header {
+      background: linear-gradient(135deg, #233a5c 0%, #3f5e8a 100%); /* Deep blue gradient */
+      color: #fff;
+      padding: 40px 0;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      letter-spacing: -0.5px;
+    }
+    header p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      margin-bottom: 30px;
+    }
+    .cta-button {
+      display: inline-block;
+      background-color: #ff9800; /* Vibrant accent color */
+      color: white;
+      padding: 15px 35px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-decoration: none;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 4px 10px rgba(255,152,0,0.3);
+    }
+    .cta-button:hover {
+      background-color: #f57c00;
+      transform: translateY(-2px);
+      text-decoration: none;
+    }
+
+    nav {
+      background: #ffffff;
+      padding: 15px 0;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      position: sticky; /* Sticky navigation */
+      top: 0;
+      z-index: 1000;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      text-align: center;
+    }
+    nav ul li {
+      display: inline-block;
+      margin: 0 15px;
+    }
+    nav ul li a {
+      color: #333;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: opacity 0.3s;
+    }
+    nav ul li a:hover {
+      opacity: 0.75;
+      text-decoration: none;
+    }
+
+    /* --- Section Styling --- */
+    section {
+      background: #fff;
+      padding: 40px 0;
+      margin-bottom: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+    section h2 {
+      text-align: center;
+      font-size: 2rem;
+      color: #2c3e50; /* Darker heading color */
+      margin-bottom: 30px;
+      position: relative;
+      padding-bottom: 10px;
+    }
+    section h2::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background-color: #ff9800; /* Accent color line */
+      border-radius: 2px;
+    }
+    .card {
+      border: 1px solid #e0e0e0;
+      padding: 25px;
+      border-radius: 8px;
+      margin-bottom: 25px;
+      background: #fefefe;
+      transition: box-shadow 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    .card:hover {
+      box-shadow: 0 8px 25px rgba(255,152,0,0.3);
+      transform: translateY(-5px);
+    }
+    .card h3 {
+      color: #3f5e8a; /* Section-specific heading color */
+      margin-bottom: 15px;
+      font-size: 1.4rem;
+    }
+    .card p {
+      color: #555;
+      font-size: 1rem;
+      margin-bottom: 0;
+    }
+
+    /* --- Tables --- */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    th, td {
+      padding: 15px 20px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+    th {
+      background-color: #3f5e8a;
+      color: white;
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+    tr:nth-child(even) {
+      background-color: #f8f9fa;
+    }
+    tr:hover {
+      background-color: #e9ecef;
+    }
+    caption {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    /* --- Forms --- */
+    form label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #333;
+    }
+    form input, form select, form textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    }
+    form textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+    form button {
+      margin-top: 20px;
+      width: 100%;
+      cursor: pointer;
+      background-color: #28a745; /* Success green for submit */
+      color: white;
+      padding: 15px 35px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      border: none;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    form button:hover {
+      background-color: #218838;
+      transform: translateY(-2px);
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+    .form-inline {
+        display: flex;
+        gap: 15px;
+    }
+    .form-inline .form-group {
+        flex: 1;
+        margin-bottom: 0;
+    }
+
+    /* --- FAQ --- */
+    dl.faq dt {
+      font-weight: 700;
+      margin-top: 25px;
+      cursor: pointer;
+      color: #3f5e8a;
+      font-size: 1.1rem;
+      position: relative;
+      padding-left: 25px;
+    }
+    dl.faq dt::before {
+        content: '+';
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: #ff9800;
+        font-size: 1.2rem;
+        font-weight: bold;
+        transition: transform 0.3s ease;
+    }
+    dl.faq dt.active::before {
+        content: '-';
+        transform: rotate(0);
+    }
+    dl.faq dd {
+      margin-left: 15px;
+      margin-top: 10px;
+      color: #555;
+      font-size: 0.95rem;
+      padding-left: 10px;
+      border-left: 2px solid #eee;
+      display: none; /* Hidden by default */
+    }
+    dl.faq dd.active {
+        display: block; /* Show when active */
+    }
+
+    /* --- External Links --- */
+    .external-links ul {
+        list-style: none;
+        padding: 0;
+    }
+    .external-links li {
+        margin-bottom: 10px;
+    }
+    .external-links a {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #0056b3;
+        font-weight: 500;
+    }
+    .external-links a:hover {
+        color: #003f7f;
+        text-decoration: none;
+    }
+    .external-links span {
+        font-size: 0.8rem;
+        color: #666;
+    }
+
+    /* --- Footer --- */
+    footer {
+      background: #2c3e50;
+      color: #ecf0f1;
+      text-align: center;
+      padding: 30px 0;
+      margin-top: 40px;
+      font-size: 0.9rem;
+    }
+    footer p {
+      margin-bottom: 10px;
+    }
+    footer a {
+      color: #ecf0f1;
+      font-weight: 500;
+    }
+    footer a:hover {
+      color: #bdc3c7;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 1.8rem;
+      }
+      nav ul li {
+        display: block;
+        margin: 10px 0;
+      }
+      .form-inline {
+          flex-direction: column;
+          gap: 0;
+      }
+      .form-inline .form-group {
+          margin-bottom: 15px;
+      }
+      section h2 {
+        font-size: 1.7rem;
+      }
+      .card {
+        padding: 20px;
+      }
+      th, td {
+        padding: 10px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- JSON-LD Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "K2 차량 유지비, 자동차 리스 & 장기렌트카 비교 견적 - 2026 최신 정보",
+    "description": "K2 차량 유지비, 자동차 리스, 장기렌트카에 대한 종합 정보. 최저가 비교 견적, 장단점 분석, 신차 구매 옵션 비교. 2026년 최신 정보 및 AI 추천 제공.",
+    "keywords": "K2 유지비, 자동차리스, 장기렌트카, K2 자동차리스, K2 장기렌트카, 자동차 리스 비용, 장기렌트카 비용, K2 평균 유지비, 신차 리스, 신차 장기렌트, 차량 구매 비교, 저렴한 자동차리스, 차량 렌트카 추천, K2 모델별 유지비, 내돈내산 후기, 신차 견적 비교, Gemini, ChatGPT, AI, 네이버, 구글, 평균, 얼마, 예상, 금액, 가격, 비용, 장점, 단점, 장단점, 차이점, 저렴한곳, 싼곳, 전문, 업체, 순위, 할인, 혜택, 현금지원",
+    "url": "https://www.example.com/k2-lease-rental",
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "홈",
+          "item": "https://www.example.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "자동차 금융"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "K2 차량 유지비, 자동차 리스 & 장기렌트카"
+        }
+      ]
+    },
+    "mainEntity": {
+      "@type": ["Service", "Product"],
+      "name": "K2 차량 리스 및 장기렌트카 서비스",
+      "description": "다양한 K2 차량 모델(기아 K 시리즈 포함)에 대한 최적의 자동차 리스 및 장기렌트카 솔루션을 제공합니다. 투명한 비용 정보와 맞춤형 견적을 통해 스마트한 차량 이용을 지원합니다. K2 유지비 절감 방안과 최신 AI 분석을 활용한 맞춤 추천을 제공합니다.",
+      "provider": {
+        "@type": "Organization",
+        "name": "AI 자동차 금융 전문가",
+        "url": "https://www.example.com/",
+        "logo": "https://www.example.com/logo.png"
+      },
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "K2 자동차 리스",
+          "description": "초기 비용 부담 없이 원하는 K2 차량(기아 K5, K8 등)을 이용하고, 월 고정 비용으로 'K2 유지비' 부담을 줄이세요. 사업자 대상 '자동차리스 가격' 비교 및 세금 혜택 정보 제공.",
+          "priceCurrency": "KRW",
+          "category": "Car Leasing",
+          "areaServed": "대한민국",
+          "itemOffered": {
+            "@type": "Product",
+            "name": "K2 자동차 리스 상품",
+            "keywords": "K2 리스, K2 자동차리스, K2 유지비, 자동차 리스 비용, 신차 리스, 저렴한 자동차리스"
+          }
+        },
+        {
+          "@type": "Offer",
+          "name": "K2 장기렌트카",
+          "description": "신차를 합리적인 '장기렌트카 비용'으로 장기간 대여하여 자동차 유지 및 관리 부담을 줄여보세요. 'K2 장기렌트카' 모델별 비교 견적 및 '내돈내산 후기' 기반 추천 제공.",
+          "priceCurrency": "KRW",
+          "category": "Long-term Car Rental",
+          "areaServed": "대한민국",
+          "itemOffered": {
+            "@type": "Product",
+            "name": "K2 장기렌트카 상품",
+            "keywords": "K2 렌트카, K2 장기렌트카, K2 유지비, 장기렌트카 비용, 신차 장기렌트, K2 모델별 유지비"
+          }
+        }
+      ],
+      "areaServed": {
+        "@type": "Country",
+        "name": "대한민국"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "K2 차량 금융 상품",
+        "itemListElement": [
+          {"@type": "Offer", "itemOffered": {"@type": "Product", "name": "K2 자동차 리스"}},
+          {"@type": "Offer", "itemOffered": {"@type": "Product", "name": "K2 장기렌트카"}}
+        ]
+      },
+      "potentialAction": {
+        "@type": "ServiceAction",
+        "name": "무료 K2 차량 견적 신청",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "#quote-request-form",
+          "inLanguage": "ko",
+          "actionPlatform": [
+            "https://schema.org/DesktopWebPlatform",
+            "https://schema.org/MobileWebPlatform"
+          ]
+        }
+      }
+    },
+    "hasPart": [
+      {
+        "@type": "WebPageElement",
+        "name": "K2 차량 유지비 분석 (2026년)",
+        "cssSelector": "#k2-maintenance-analysis"
+      },
+      {
+        "@type": "WebPageElement",
+        "name": "자동차 리스 vs 장기렌트카 비교",
+        "cssSelector": "#lease-vs-rental-comparison"
+      },
+      {
+        "@type": "WebPageElement",
+        "name": "K2 인기 모델 정보 및 AI 추천",
+        "cssSelector": "#popular-k2-models"
+      },
+      {
+        "@type": "WebPageElement",
+        "name": "스마트 견적 신청",
+        "cssSelector": "#quote-request-form"
+      },
+      {
+        "@type": "WebPageElement",
+        "name": "AI 전문가 Q&A",
+        "cssSelector": "#faq"
+      }
+    ]
+  }
+  </script>
+
+  <header id="상단">
+    <div class="container">
+      <h1>K2 차량 유지비, 자동차 리스 & 장기렌트카 비교 견적</h1>
+      <p><strong>2026년 최신 정보</strong> 기반, AI 분석으로 알아보는 K2 차량 유지비 절감 솔루션 | 리스 vs 렌트 비교 및 최저가 견적</p>
+      <a href="#quote-request-form" class="cta-button">지금 바로 무료 견적 신청하기</a>
+    </div>
+  </header>
+
+  <nav>
+    <div class="container">
+      <ul>
+        <li><a href="#k2-maintenance-analysis">K2 유지비 분석</a></li>
+        <li><a href="#lease-vs-rental-comparison">리스 vs 렌트 비교</a></li>
+        <li><a href="#popular-k2-models">인기 K2 모델</a></li>
+        <li><a href="#quote-request-form">무료 견적</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#resources">유용한 자료</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section id="intro">
+    <div class="container">
+      <h2>K2 차량, 현명하게 소유하는 방법</h2>
+      <p style="text-align: center; max-width: 800px; margin: 0 auto;">
+        자동차 구매 및 유지에 대한 새로운 기준을 제시합니다. 'K2 유지비'에 대한 깊이 있는 분석부터 '자동차리스'와 '장기렌트카'의 장단점 비교, 그리고 'K2 평균 유지비'를 낮추는 최신 정보까지, 2026년 기준 AI 기반 솔루션을 총망라했습니다. 당신에게 가장 적합한 '차량 구매 비교'를 통해 '저렴한 자동차리스' 혹은 '가성비 좋은 장기렌트카'를 찾아보세요. '내돈내산 후기'와 전문가의 '추천' 정보를 바탕으로 '신차 견적 비교'까지 한 번에 해결할 수 있습니다. AI 챗봇 Gemini, ChatGPT와 함께 스마트한 자동차 금융 생활을 시작하세요!
+      </p>
+    </div>
+  </section>
+
+  <section id="k2-maintenance-analysis">
+    <div class="container">
+      <h2>K2 차량의 현실적인 유지비 분석 (2026년 기준)</h2>
+      <p style="text-align: center; margin-bottom: 30px;">
+        'K2 차량 유지비'는 단순히 기름값만이 전부가 아닙니다. 보험료, 세금, 소모품 교체, 수리비 등 다양한 요소가 포함됩니다. 특히, K2 차량으로 대표되는 인기 모델들의 'K2 평균 유지비'를 정확히 파악하는 것이 '자동차리스' 또는 '장기렌트카' 상품 선택의 핵심입니다. 2026년, 최신 데이터를 바탕으로 주요 K2 모델군(기아 K 시리즈 등)의 예상 유지비를 분석합니다.
+      </p>
+
+      <div class="card">
+        <h3>K2 차량 유지비 구성 요소</h3>
+        <p>
+          <strong>1. 유류비:</strong> 연간 주행 거리, 연비, 유가 변동에 따라 크게 달라집니다. 최신 K2 모델들은 연비 효율성이 향상되었지만, 여전히 운전 습관이 중요합니다. 'K2 유지비 얼마'를 계산할 때 가장 큰 비중을 차지하는 항목 중 하나입니다.
+        </p>
+        <p>
+          <strong>2. 보험료:</strong> 자동차 보험료는 운전자의 연령, 운전 경력, 사고 이력, 차종(K2 모델), 가입 특약 등에 따라 결정됩니다. '자동차리스'의 경우, 고객 명의로 보험에 가입하며 보험 경력이 유지되는 장점이 있습니다. 반면, '장기렌트카'는 렌터카 회사 명의로 보험이 가입되며, 사고 시 보험료 할증에 대한 부담은 적지만, 사고 처리 과정에서 '업체'와의 협의가 필요합니다. '신차 보험료'는 신차 가액에 비례하여 높아지는 경향이 있습니다.
+        </p>
+        <p>
+          <strong>3. 세금:</strong> 자동차세는 차량 배기량, 연식, 경차/승용차/SUV 여부에 따라 부과됩니다. '자동차리스'와 '장기렌트카' 모두 월 납입금에 자동차세가 포함되어 있어, 고정적인 '차량 구매 비교' 없이 세금 부담을 관리할 수 있습니다. 특히, 사업자는 '자동차리스' 비용을 경비 처리하여 절세 효과를 누릴 수 있습니다. 'K2 차량세' 정보는 각 지자체별로 확인 가능합니다.
+        </p>
+        <p>
+          <strong>4. 소모품 교체 및 정비:</strong> 엔진 오일, 타이어, 브레이크 패드, 에어컨 필터 등 주기적인 교체가 필요한 소모품 비용과 예상치 못한 고장 시 수리비가 발생합니다. 'K2 모델별 유지비' 차이는 이 부분에서 두드러질 수 있습니다. '장기렌트카' 상품 중에는 소모품 교체 및 정비를 포함하는 '풀케어' 옵션도 제공되므로, '저렴한 장기렌트카'를 찾더라도 이러한 서비스를 고려해야 합니다. 'AI'는 이러한 '소모품 교체 주기' 및 '정비 비용'을 예측하여 최적의 상품을 추천합니다.
+        </p>
+        <p>
+          <strong>5. 기타:</strong> 주차비, 통행료, 검사 대행료 등도 'K2 유지비'에 포함될 수 있습니다.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>K2 대표 모델 예상 연간 유지비 비교 (2026년, 순수 예상치)</h3>
+        <p>
+          다음 표는 2026년 기준으로, 연간 15,000km 주행을 가정했을 때의 주요 K2 대표 모델(세단 및 SUV)의 예상 연간 유지비 비교입니다. 이는 '평균'적인 수치이며, 실제 '금액'은 운전 습관, 지역, 보험 조건 등에 따라 크게 달라질 수 있습니다. '차량 렌트카 추천' 시 고려해야 할 중요한 지표입니다.
+        </p>
+        <table>
+          <caption>K2 대표 모델 예상 연간 유지비 비교 (2026)</caption>
+          <thead>
+            <tr>
+              <th>구분 (Category)</th>
+              <th>모델 예시 (Example Model)</th>
+              <th>배기량 (CC)</th>
+              <th>연비 (km/L)</th>
+              <th>유류비 (예상)</th>
+              <th>보험료 (예상)</th>
+              <th>자동차세 (예상)</th>
+              <th>소모품/정비 (예상)</th>
+              <th>총 연간 예상 유지비</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>세단 (Sedan)</td>
+              <td>기아 K5 (2.0 가솔린)</td>
+              <td>1,998cc</td>
+              <td>11.0 km/L</td>
+              <td>약 180만원</td>
+              <td>약 100만원</td>
+              <td>약 30만원</td>
+              <td>약 50만원</td>
+              <td><strong>약 360만원</strong></td>
+            </tr>
+            <tr>
+              <td>세단 (Sedan)</td>
+              <td>현대 그랜저 (2.5 가솔린)</td>
+              <td>2,497cc</td>
+              <td>10.7 km/L</td>
+              <td>약 190만원</td>
+              <td>약 110만원</td>
+              <td>약 35만원</td>
+              <td>약 60만원</td>
+              <td><strong>약 405만원</strong></td>
+            </tr>
+            <tr>
+              <td>SUV</td>
+              <td>기아 쏘렌토 (2.2 디젤)</td>
+              <td>2,199cc</td>
+              <td>13.0 km/L</td>
+              <td>약 150만원</td>
+              <td>약 120만원</td>
+              <td>약 45만원</td>
+              <td>약 70만원</td>
+              <td><strong>약 385만원</strong></td>
+            </tr>
+            <tr>
+              <td>SUV</td>
+              <td>현대 싼타페 (2.5 가솔린)</td>
+              <td>2,497cc</td>
+              <td>9.7 km/L</td>
+              <td>약 210만원</td>
+              <td>약 120만원</td>
+              <td>약 35만원</td>
+              <td>약 65만원</td>
+              <td><strong>약 430만원</strong></td>
+            </tr>
+            <tr>
+              <td>준대형/럭셔리</td>
+              <td>제네시스 G80 (2.5 가솔린 터보)</td>
+              <td>2,497cc</td>
+              <td>9.6 km/L</td>
+              <td>약 220만원</td>
+              <td>약 150만원</td>
+              <td>약 40만원</td>
+              <td>약 80만원</td>
+              <td><strong>약 490만원</strong></td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="text-align: center; font-size: 0.9rem; color: #666;">
+          *상기 비용은 2026년 예상치이며, 실제 차량 가격, 보험료, 유가 변동, 운전 습관 등에 따라 달라질 수 있습니다.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="lease-vs-rental-comparison">
+    <div class="container">
+      <h2>자동차 리스 vs 장기렌트카: 당신에게 맞는 선택은?</h2>
+      <p style="text-align: center; margin-bottom: 30px;">
+        '자동차리스'와 '장기렌트카'는 신차를 구매하는 것과는 다른 방식으로 차량을 이용하는 대표적인 방법입니다. 각각의 '장점'과 '단점', 그리고 '차이점'을 명확히 이해하는 것이 'K2 유지비'를 절감하고 만족도를 높이는 길입니다. 'AI'는 방대한 데이터를 분석하여 개인의 상황에 맞는 최적의 솔루션을 추천합니다. '저렴한 K2 장기렌트카'와 'K2 자동차리스'의 비교 견적을 통해 현명한 결정을 내리세요.
+      </p>
+
+      <div class="card">
+        <h3>자동차 리스 vs 장기렌트카 상세 비교</h3>
+        <table>
+          <caption>자동차 리스 vs 장기렌트카 비교 (2026년 기준)</caption>
+          <thead>
+            <tr>
+              <th>구분 (Category)</th>
+              <th>자동차 리스 (Car Lease)</th>
+              <th>장기렌트카 (Long-Term Rental)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>명의 (Ownership)</strong></td>
+              <td>금융사 (Financial Company)</td>
+              <td>렌터카 회사 (Rental Car Company)</td>
+            </tr>
+            <tr>
+              <td><strong>차량 번호판</strong></td>
+              <td>일반 번호판 (Standard Plate)</td>
+              <td>렌터카 번호판 (하/허/호) (Rental Plate)</td>
+            </tr>
+            <tr>
+              <td><strong>월 납입금 포함 항목</strong></td>
+              <td>차량 가액, 이자, 자동차세, (선택 시)보험료</td>
+              <td>차량 가액, 이자, 자동차세, 보험료, (선택 시)소모품 교체</td>
+            </tr>
+            <tr>
+              <td><strong>보험 (Insurance)</strong></td>
+              <td>고객 직접 가입 (개인/법인 보험 경력 유지). '보험료'는 개인 조건 반영.</td>
+              <td>렌터카 회사 명의로 가입. 사고 시 보험 처리 지원 (사고 이력 증가 가능성).</td>
+            </tr>
+            <tr>
+              <td><strong>세금 혜택</strong></td>
+              <td><strong>사업자:</strong> 경비 처리, 부가세 공제. <br><strong>개인:</strong> 연말정산 소득공제 (일부).</td>
+              <td><strong>개인/법인:</strong> 경비 처리, 부가세 공제 (법인). '장기렌트카 비용' 전액 경비 인정.</td>
+            </tr>
+            <tr>
+              <td><strong>초기 비용</strong></td>
+              <td>선수금(보증금) 선택에 따라 다양. 선수금 낮으면 월 '자동차리스 가격'↑.</td>
+              <td>보증금(선택) 또는 무보증 (신용도 중요). '신규 가입' 시 혜택 있을 수 있음.</td>
+            </tr>
+            <tr>
+              <td><strong>계약 기간</strong></td>
+              <td>일반적으로 24~72개월.</td>
+              <td>일반적으로 12~60개월 (다양한 옵션).</td>
+            </tr>
+            <tr>
+              <td><strong>계약 종료 후</strong></td>
+              <td>차량 반납, 인수(잔존가치 납부), 재리스. '차량 가치'에 따른 정산.</td>
+              <td>차량 반납, 인수(잔존가치 납부). '인수 금액' 투명.</td>
+            </tr>
+            <tr>
+              <td><strong>주요 장점</strong></td>
+              <td>
+                <ul>
+                  <li><strong>저렴한 '자동차리스 가격'</strong></li>
+                  <li>일반 번호판으로 자존심 유지</li>
+                  <li>사업자 세금 혜택 극대화</li>
+                  <li>차량 관리 용이 (고객 직접 관리)</li>
+                  <li>'K2 자동차리스' 전문 '업체' 통한 맞춤 상담</li>
+                </ul>
+              </td>
+              <td>
+                <ul>
+                  <li>'장기렌트카 비용' 관리 용이</li>
+                  <li>사고 시 보험료 할증 부담 없음</li>
+                  <li>신차 출고 및 교체 주기 단축 용이</li>
+                  <li>'K2 장기렌트카' 소모품 포함 서비스 (옵션)</li>
+                  <li>'저렴한 곳' 또는 '싼 곳'을 찾기 위한 비교 용이</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>주요 단점</strong></td>
+              <td>
+                <ul>
+                  <li>계약 중도 해지 시 높은 위약금</li>
+                  <li>주행 거리 제한 (초과 시 페널티)</li>
+                  <li>차량 가치 하락 시 정산 불리 가능성</li>
+                </ul>
+              </td>
+              <td>
+                <ul>
+                  <li>렌터카 번호판으로 인한 인식 (일부)</li>
+                  <li>'내돈내산 후기'에 따르면, 사고 잦을 시 보험료 상승 영향</li>
+                  <li>주행 거리 제한 (옵션 선택 필수)</li>
+                  <li>'AI'는 차량 번호판 이슈를 최소화하는 '상품'도 분석 제공</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>추천 대상</strong></td>
+              <td>
+                사업자, 법인 대표, 차량 운행이 일정하고 '차량 가치' 관리에 신경 쓰는 개인, '연말정산 혜택'을 원하는 분.
+              </td>
+              <td>
+                신차 교체 주기가 짧은 분, 사고 위험 부담을 줄이고 싶은 분, 'K2 유지비'를 고정적으로 관리하고 싶은 분, '첫차' 구매자.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="text-align: center; font-size: 0.9rem; color: #666;">
+          *상기 내용은 일반적인 정보를 바탕으로 하며, 각 금융사 및 렌터카 '업체'별 상품 조건에 따라 상이할 수 있습니다.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="popular-k2-models">
+    <div class="container">
+      <h2>주목해야 할 K2 인기 모델 및 AI 추천 (2026)</h2>
+      <p style="text-align: center; margin-bottom: 30px;">
+        'K2'라는 키워드는 현대/기아의 다양한 인기 차량 라인업을 포괄합니다. 특히 '기아 K 시리즈'(K5, K8 등)는 '자동차리스' 및 '장기렌트카' 시장에서 높은 인기를 누리고 있습니다. 2026년, 주목받는 K2 관련 모델들과 각 모델별 '장점', '단점', 그리고 '유지비' 측면에서 'AI'가 제안하는 '추천' 정보를 확인하세요. '순위'를 매기기보다는 각 차량의 특성을 이해하고 '비교'하는 것이 중요합니다. '네이버', '구글' 등에서 많이 찾는 '자동완성 키워드'와 '연관검색어'를 반영한 추천 리스트입니다.
+      </p>
+
+      <div class="card">
+        <h3>K2 대표 모델 라인업 및 특징</h3>
+        <div class="form-inline" style="margin-bottom: 30px;">
+          <div class="form-group">
+            <label for="model-search">관심 모델 검색</label>
+            <input type="text" id="model-search" placeholder="예: K5, 쏘렌토, 그랜저">
+          </div>
+          <div class="form-group">
+            <label for="model-type">차량 유형</label>
+            <select id="model-type">
+              <option value="">전체</option>
+              <option value="sedan">세단</option>
+              <option value="suv">SUV</option>
+              <option value="luxury">준대형/럭셔리</option>
+            </select>
+          </div>
+        </div>
+        <p><strong>AI 기반 추천 로직:</strong> 사용자의 주행 패턴, '유지비' 민감도, 선호하는 '장점' 등을 AI가 분석하여 개인 맞춤형 모델을 추천합니다. 'ChatGPT', 'Gemini'와 같은 AI 모델이 데이터 분석에 활용됩니다.</p>
+
+        <div class="card" style="background: #f0f8ff; border-color: #d0e8ff;">
+          <h4>준중형/중형 세단 (Mid-size Sedans)</h4>
+          <ul>
+            <li><strong>기아 K5:</strong> 스포티한 디자인과 합리적인 'K2 유지비'. '자동차리스' 및 '장기렌트카' 모두 인기. '장점': 세련된 디자인, 다양한 트림. '단점': 동급 대비 다소 높은 '자동차세'. 'K2 평균 유지비' 중하위권.</li>
+            <li><strong>현대 쏘나타:</strong> 안정적인 주행감과 넓은 실내 공간. 'K2 장기렌트카'로 많이 선택. '장점': 편안한 승차감, 옵션 구성 다양. '단점': 디자인 호불호.</li>
+            <li><strong>르노 SM6:</strong> 독특한 디자인과 고급스러운 실내. '저렴한 곳'에서 '신규' 프로모션 시 고려 대상. '장점': 유니크한 디자인. '단점': 상대적으로 높은 '유지비' 예상.</li>
+          </ul>
+        </div>
+        <div class="card" style="background: #fff0f5; border-color: #ffe0eb;">
+          <h4>중형/준대형 세단 (Mid-size to Large Sedans)</h4>
+          <ul>
+            <li><strong>기아 K8:</strong> 고급스러운 디자인과 최신 기술 집약. 'K2 자동차리스' 상품으로 선호. '장점': 뛰어난 정숙성, 첨단 편의 사양. '단점': 높은 '자동차리스 가격', 'K2 유지비' 부담.</li>
+            <li><strong>현대 그랜저:</strong> '국민 세단'의 위엄. 압도적인 판매량, 폭넓은 '가격'대. '장점': 넓은 실내, 높은 '차량 가치'. '단점': 높은 초기 구매 '금액', 'K2 평균 유지비' 중상위권.</li>
+            <li><strong>제네시스 G80:</strong> 프리미엄 세단의 정점. 'K2 자동차리스'의 고급 옵션. '장점': 최고급 소재, 뛰어난 주행 성능. '단점': 가장 높은 '비용' 부담.</li>
+          </ul>
+        </div>
+        <div class="card" style="background: #f5f5dc; border-color: #e0e0c8;">
+          <h4>SUV (Sports Utility Vehicles)</h4>
+          <ul>
+            <li><strong>기아 쏘렌토:</strong> 패밀리 SUV의 대표 주자. 넓은 공간과 실용성. '장점': 다재다능함, 넓은 2열/3열 공간. '단점': 연비, 세금 부담 상대적으로 높음.</li>
+            <li><strong>현대 싼타페:</strong> 쏘렌토와 유사한 포지션. 현대차 특유의 안정감. '장점': 다양한 파워트레인 선택지, 편안한 승차감. '단점': 디자인에 대한 호불호.</li>
+            <li><strong>기아 스포티지:</strong> 컴팩트 SUV 시장 강자. 젊은 층에게 인기. '장점': 세련된 디자인, 합리적인 '가격'. '단점': 2열 공간이 다소 좁음.</li>
+            <li><strong>현대 투싼:</strong> 스포티지와 경쟁 모델. 현대적인 디자인과 기술. '장점': 독창적인 외관 디자인. '단점': 동급 대비 높은 '신차 가격'.</li>
+            <li><strong>제네시스 GV80:</strong> 럭셔리 SUV 시장의 강자. 'K2 자동차리스'로도 인기. '장점': 압도적인 고급감, 강력한 성능. '단점': 높은 '금액' 및 '유지비'.</li>
+          </ul>
+        </div>
+        <p style="text-align: center; font-size: 0.9rem; color: #666;">
+          *상기 모델명은 대표적인 예시이며, 'K2'라는 키워드와 관련하여 다양한 차종이 존재합니다. 'AI'는 약 30개 이상의 모델에 대한 상세 비교 데이터를 보유하고 있습니다. '할인' 및 '혜택' 정보는 시점에 따라 변동됩니다.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="quote-request-form">
+    <div class="container">
+      <h2>맞춤형 무료 견적 신청</h2>
+      <p style="text-align: center; margin-bottom: 30px;">
+        가장 합리적인 '자동차리스' 및 '장기렌트카' '견적'을 지금 바로 받아보세요. 'AI' 기반의 '전문' 상담사가 고객님의 조건에 딱 맞는 최적의 '상품'을 찾아드립니다. '이벤트' 및 '현금지원' '혜택' 정보도 함께 안내해 드립니다. '신규 가입' 시 특별한 '사은품'을 제공할 수도 있습니다. '궁금한 점'이 있다면 무엇이든 문의하세요! 'Gemini', 'ChatGPT'와 같은 'AI' 챗봇이 실시간 답변을 지원합니다.
+      </p>
+
+      <form action="/submit-quote" method="POST" aria-describedby="quote-form-description">
+        <p id="quote-form-description">아래 정보를 상세히 입력해주시면, 최적의 K2 차량 금융 상품 견적을 보내드립니다.</p>
+
+        <div class="form-group">
+          <label for="quote-type">원하는 서비스 유형</label>
+          <select id="quote-type" name="service_type" required>
+            <option value="">선택하세요</option>
+            <option value="lease">자동차 리스</option>
+            <option value="rental">장기렌트카</option>
+            <option value="comparison">두 서비스 비교 견적</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="quote-model">관심 있는 K2 모델 (복수 선택 가능)</label>
+          <input type="text" id="quote-model" name="model_interest" placeholder="예: 기아 K5, 현대 그랜저, 제네시스 G80 (모델명 입력)">
+        </div>
+
+        <div class="form-inline">
+          <div class="form-group">
+            <label for="quote-period">계약 기간 (월)</label>
+            <input type="number" id="quote-period" name="contract_period_months" placeholder="예: 36" min="12" max="72" required>
+          </div>
+          <div class="form-group">
+            <label for="quote-mileage">연간 희망 주행 거리 (km)</label>
+            <input type="number" id="quote-mileage" name="annual_mileage_km" placeholder="예: 20000" required>
+          </div>
+        </div>
+
+        <div class="form-inline">
+          <div class="form-group">
+            <label for="quote-initial-payment">초기 납입금 (선택)</label>
+            <input type="text" id="quote-initial-payment" name="initial_payment_krw" placeholder="예: 5000000 (선택 사항)">
+          </div>
+          <div class="form-group">
+            <label for="quote-deposit">보증금 비율 (선택)</label>
+            <select id="quote-deposit" name="deposit_percentage">
+              <option value="">선택 안함</option>
+              <option value="0">0% (무보증)</option>
+              <option value="10">10%</option>
+              <option value="20">20%</option>
+              <option value="30">30%</option>
+              <option value="40">40%</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="quote-driver-age">주 운전자 연령</label>
+          <input type="number" id="quote-driver-age" name="primary_driver_age" placeholder="예: 35" required>
+        </div>
+
+        <div class="form-group">
+          <label for="quote-usage">차량 주 용도</label>
+          <select id="quote-usage" name="vehicle_primary_use" required>
+            <option value="">선택하세요</option>
+            <option value="commute">출퇴근용</option>
+            <option value="family">패밀리카</option>
+            <option value="business">업무/영업용</option>
+            <option value="leisure">레저/주말용</option>
+            <option value="multiple">복합 용도</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="quote-phone">연락처</label>
+          <input type="tel" id="quote-phone" name="contact_phone" placeholder="010-1234-5678" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" required>
+        </div>
+
+        <div class="form-group">
+          <label for="quote-email">이메일 주소</label>
+          <input type="email" id="quote-email" name="contact_email" placeholder="your.email@example.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="quote-additional-questions">추가 문의사항 (선택)</label>
+          <textarea id="quote-additional-questions" name="additional_inquiries" placeholder="궁금한 점이나 특별히 요청하고 싶은 사항이 있다면 자유롭게 작성해주세요. (예: 특정 프로모션 문의, 차량 옵션 상담 요청 등)"></textarea>
+        </div>
+
+        <button type="submit" class="cta-button" style="background-color: #28a745; font-size: 1.2rem;"><strong>무료 견적 요청하기</strong></button>
+      </form>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="container">
+      <h2>자주 묻는 질문 (AI 기반 Q&A)</h2>
+      <dl class="faq">
+        <dt>Q1: K2 차량의 '평균 유지비'는 정확히 얼마인가요?</dt>
+        <dd>
+          A1: 'K2 평균 유지비'는 모델, 연식, 주행 거리, 보험 조건 등에 따라 크게 달라집니다. 예를 들어, 기아 K5 2.0 가솔린 모델의 경우 연간 약 360만원 내외의 유지비(유류비, 보험료, 세금, 소모품 포함)가 예상됩니다 (2026년 기준). 하지만 이는 순수 예상치이며, 실제 '금액'은 개인별 편차가 큽니다. 'AI'는 사용자의 주행 패턴을 분석하여 더욱 정확한 '예상 금액'을 계산해 드립니다. '자동차리스'나 '장기렌트카'를 이용하면 이러한 '유지비'를 월 고정 비용으로 관리할 수 있습니다.
+        </dd>
+
+        <dt>Q2: '자동차리스'와 '장기렌트카'의 가장 큰 '차이점'은 무엇인가요?</dt>
+        <dd>
+          A2: 가장 큰 '차이점'은 차량 명의와 번호판입니다. '자동차리스'는 금융사 명의, 일반 번호판을 사용하며, 개인/사업자 모두 세금 혜택(특히 사업자 경비 처리)을 받을 수 있습니다. '장기렌트카'는 렌터카 회사 명의, '하/허/호' 번호판을 사용하며, 월 렌트료에 보험료와 세금이 모두 포함되어 있어 관리가 편리하고 사고 시 보험료 할증 부담이 없습니다. 'AI'는 이러한 '장단점'을 종합 분석하여 고객님께 맞는 솔루션을 제안합니다.
+        </dd>
+
+        <dt>Q3: '저렴한 K2 장기렌트카'를 찾는 '팁'이 있나요?</dt>
+        <dd>
+          A3: '저렴한 곳' 또는 '싼 곳'을 찾으려면 여러 '업체'의 '견적'을 '비교'하는 것이 필수입니다. 또한, 계약 기간을 길게 하거나(예: 48개월 이상), 연간 주행 거리를 보수적으로 설정하거나, 보증금을 높이는 방식(무보증 대비)으로 월 '비용'을 낮출 수 있습니다. '신규' 출시 모델이나 '프로모션' 기간을 활용하는 것도 좋은 방법입니다. 'AI'는 최신 '할인' 및 '혜택' 정보를 종합하여 가장 '가성비' 좋은 '상품'을 추천해 드립니다. '내돈내산 후기'를 참고하는 것도 도움이 됩니다.
+        </dd>
+
+        <dt>Q4: 'K2 자동차리스' 이용 시, 계약 기간 종료 후 차량 '인수'와 '반납' 중 어떤 것이 유리한가요?</dt>
+        <dd>
+          A4: 이는 차량 '가치'와 개인의 선호도에 따라 다릅니다. 차량 '인수'를 원하시면, 계약 시 정해진 '잔존가치'를 납부하고 차량을 소유할 수 있습니다. 이는 '신차'를 다시 구매하는 것보다 '저렴한 금액'으로 차량을 확보할 수 있는 방법입니다. 반면, 차량을 '반납'하시면 새로운 '신차'로 교체하거나 다른 금융 상품을 이용할 수 있습니다. 'AI'는 예상 '차량 가치' 하락률 등을 분석하여 '인수'와 '반납'의 경제성을 비교해 드립니다.
+        </dd>
+
+        <dt>Q5: 'K2 신규 가입' 시 특별한 '혜택'이나 '사은품'이 제공되나요?</dt>
+        <dd>
+          A5: 네, 많은 '업체'들이 '신규 가입' 고객을 위한 '이벤트'나 '현금지원', '사은품' 증정 등의 '혜택'을 제공하고 있습니다. 'AI'는 이러한 '프로모션' 정보를 실시간으로 수집하여 '견적' 신청 시 최신 '혜택' 정보를 함께 안내해 드립니다. 'ChatGPT' 기반 챗봇을 통해 현재 진행 중인 '이벤트'에 대한 상세 문의도 가능합니다.
+        </dd>
+      </dl>
+    </div>
+  </section>
+
+  <section id="resources">
+    <div class="container">
+      <h2>신뢰할 수 있는 외부 자료</h2>
+      <p style="text-align: center; margin-bottom: 30px;">
+        'K2 차량' 및 '자동차 금융'에 대한 추가 정보를 얻을 수 있는 공신력 있는 외부 웹사이트입니다. '정부'에서 제공하는 정보와 '나무위키' 등에서 제공하는 포괄적인 자료를 통해 더욱 깊이 있는 이해를 도울 수 있습니다.
+      </p>
+      <div class="external-links">
+        <ul>
+          <li>
+            <a href="https://www.car365.go.kr/" target="_blank" rel="noopener noreferrer">
+              자동차365 (Car 365) <span>- 대한민국 자동차 통합 정보 포털</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.law.go.kr/" target="_blank" rel="noopener noreferrer">
+              국가법령정보센터 <span>- 자동차 관련 법규 및 계약 정보 확인</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.kca.go.kr/" target="_blank" rel="noopener noreferrer">
+              한국소비자원 <span>- 자동차 금융 관련 소비자 피해 예방 및 상담</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://namu.wiki/w/%EC%9E%90%EB%8F%99%EC%B0%A8%20%EB%A6%AC%EC%8A%A4" target="_blank" rel="noopener noreferrer">
+              나무위키: 자동차 리스 <span>- 자동차 리스에 대한 포괄적 정보</span>
+            </a>
+            <!-- Note: Specific K2/Rental pages might exist, adjust URL if found -->
+          </li>
+          <li>
+            <a href="https://www.molit.go.kr/" target="_blank" rel="noopener noreferrer">
+              국토교통부 (MOLIT) <span>- 교통 정책 및 관련 정보</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+
+  <script>
+    // FAQ Accordion functionality
+    document.querySelectorAll('.faq dt').forEach(dt => {
+      dt.addEventListener('click', () => {
+        const dd = dt.nextElementSibling;
+        dt.classList.toggle('active');
+        dd.classList.toggle('active');
+      });
+    });
+
+    // Simple model search filter (basic example)
+    const modelSearchInput = document.getElementById('model-search');
+    if (modelSearchInput) {
+      modelSearchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase();
+        document.querySelectorAll('#popular-k2-models .card h4, #popular-k2-models .card ul li').forEach(item => {
+          const parentCard = item.closest('.card');
+          if (parentCard) {
+            const text = item.textContent.toLowerCase();
+            if (text.includes(query) || parentCard.textContent.toLowerCase().includes(query)) {
+              parentCard.style.display = '';
+            } else {
+              parentCard.style.display = 'none';
+            }
+          }
+        });
+      });
+    }
+  </script>
+  
